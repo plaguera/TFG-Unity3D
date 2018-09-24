@@ -65,7 +65,7 @@ public class GameManager : NetworkBehaviour {
         {
             Players.Add(player);
             if (Players.Count == 1) TurnStartPlayer = player.Name;
-            else if (Players.Count == N_PLAYERS)
+            else if (Players.Count == Prototype.NetworkLobby.LobbyManager.n_PLAYERS)
             {
                 RpcChangePhase(TurnPhase, TurnStartPlayer);
                 NotifyJavaServer();
@@ -155,6 +155,7 @@ public class GameManager : NetworkBehaviour {
                     msg = "scores";
                     foreach (Player i in Players)
                         msg += "#" + i.Name + "," + i.Score;
+                    ServerSocket.Send(msg);
                 }
 
                 PlayerSelections.Clear();

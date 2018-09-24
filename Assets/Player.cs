@@ -7,7 +7,7 @@ public class Player : NetworkBehaviour {
     [SyncVar] public string Name;
     [SyncVar] public Color Color;
     [SyncVar] public int Score;
-    [SyncVar(hook = "OnChangeStatus")] public PlayerStatus Status;
+    [SyncVar] public PlayerStatus Status;
 
     static public Player Instance;
 
@@ -30,7 +30,8 @@ public class Player : NetworkBehaviour {
                 + GameManager.Instance.TurnPhase + " - "
                 + GameManager.Instance.TurnStartPlayer + " - "
                 + GameManager.Instance.ImageSelection?.Name + " - "
-                + GameManager.Instance.ImageSelections.Count + "</color>";
+                + GameManager.Instance.ImageSelections.Count + " - "
+                             + Prototype.NetworkLobby.LobbyManager.n_PLAYERS + "</color>";
             GUI.Label(new Rect(10, 10, 300, 40), text);
         }
     }
@@ -83,17 +84,6 @@ public class Player : NetworkBehaviour {
     /// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:TheFiskDataModel.Networking.OnlinePlayer"/>.</returns>
     public override string ToString()
     {
-        return $"[Player: Name = {Name}, Color = {Color}]";
+        return $"[Player: Name = {Name}, Color = {Color}, Score = {Score}]";
     }
-
-    #region "Hooks"
-
-    void OnChangeStatus(PlayerStatus status)
-    {
-        //Status = status;
-        //Debug.LogError(Instance.Name + " = " + Instance.Status + " / " + status);
-        //GameManager.Instance.WaitingPanel.SetActive(status == PlayerStatus.Waiting);
-    }
-
-    #endregion "Hooks"
 }
